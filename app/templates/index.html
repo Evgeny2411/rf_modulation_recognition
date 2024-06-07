@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-content">
+            <h1>Recieve Signal</h1>
+            <button class="button-fancy" , onclick="startMonitoring()">Start Monitoring</button>
+            <div class="plot-grid hidden">
+                <div id="original" style="width:500px;height:350px;"></div>
+                <div id="fft" style="width:500px;height:350px;"></div>
+                <div id="wavelet" style="width:500px;height:350px;"></div>
+                <div id="constellation" style="width:500px;"></div>
+
+                <h3 class='model-prediction'>Model prediction of modulation {{prediction}}</h3>
+                <h3 class='true-label'>Setted true label of modulation {{true_label}}</h3>
+                <div class='modulation-reset'>
+                    <h3>Reset modulation to:</h3>
+                    <div class='selectdiv'>
+                        <form action="/set_modulation_type" , method="post">
+                            <select name="modulation">
+                                <option value="32PSK">32PSK</option>
+                                <option value="16APSK">16APSK</option>
+                                <option value="32QAM">32QAM</option>
+                                <option value="FM">FM</option>
+                                <option value="GMSK">GMSK</option>
+                                <option value="32APSK">32APSK</option>
+                                <option value="OQPSK">OQPSK</option>
+                                <option value="8ASK">8ASK</option>
+                                <option value="Unrecognized">Unrecognized</option>
+                            </select>
+                            <input id='id_field' , type="hidden" , name="signal_id">
+                            <input class="button-fancy" , type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="side-content">
+            <div class="'table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Filename</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for signal in signals %}
+                        <tr data-id="{{ signal[0] }}">
+                            <td>{{ signal[1] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class='button-container'>
+                <button id="load-file" class="button-fancy">Load chosen file</button>
+            </div>
+        </div>
+</body>
+
+</html>
