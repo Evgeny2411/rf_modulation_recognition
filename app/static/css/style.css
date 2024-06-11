@@ -4,8 +4,6 @@
 
 .selectdiv {
     position: relative;
-    /*Don't really need this just for demo styling*/
-
     float: left;
     min-width: 200px;
     margin: 50px 33%;
@@ -21,12 +19,10 @@
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
     right: 11px;
-    /*Adjust for position however you want*/
 
     top: 18px;
     padding: 0 0 2px;
     border-bottom: 1px solid #999;
-    /*left line */
 
     position: absolute;
     pointer-events: none;
@@ -36,7 +32,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    /* Add some styling */
 
     display: block;
     width: 100%;
