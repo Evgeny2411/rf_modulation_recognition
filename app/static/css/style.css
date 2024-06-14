@@ -1,7 +1,3 @@
-@import "compass/css3";
-
-
-
 .selectdiv {
     position: relative;
     float: left;
@@ -79,6 +75,17 @@ table {
     word-break: break-word;
     border: 0;
 }
+
+.button-fancy:hover {
+    /* Add your hover styles here */
+    background-color: #95ea70;
+}
+
+.button-fancy.active {
+    /* Add your active styles here */
+    background-color: #f2a310;
+}
+
 
 table {
     font-family: 'Arial';
