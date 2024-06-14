@@ -7,6 +7,7 @@
     <title>Signal Analysis</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
@@ -59,7 +60,7 @@
                     <tbody>
                         {% for signal in signals %}
                         <tr data-id="{{ signal[0] }}">
-                            <td>{{ signal[1] }}</td>
+                            <td>{{ signal[1].split('\\')|last }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
