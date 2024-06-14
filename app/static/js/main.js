@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     var selectedRowId = null;
     $('tr[data-id]').click(function () {
@@ -19,8 +20,8 @@ $(document).ready(function () {
                     plotSpectrogram(response.wavelet, 'wavelet', 'Wavelet Data');
                     plotConstellation(response.constellation, 'constellation', 'Constellation Data');
                     $('#id_field').val(response.signal_id);
-                    document.querySelector('h3.model-prediction').textContent = 'Model prediction of modulation ' + response.prediction;
-                    document.querySelector('h3.true-label').textContent = 'Setted True Label of modulation ' + response.true_label;
+                    document.querySelector('h3.model-prediction').textContent = 'Model prediction of modulation: ' + response.prediction;
+                    document.querySelector('h3.true-label').textContent = 'Setted True Label of modulation: ' + response.true_label;
                     selectedRowId = null;
                     $('tr[data-id]').removeClass('active');
                     document.querySelector('.plot-grid').classList.remove('hidden');
@@ -34,22 +35,42 @@ $(document).ready(function () {
         }
     });
 });
+
 function startMonitoring() {
     $.ajax({
         url: '/start_monitoring',
         method: 'GET',
         success: function (response) {
-            plotIQTimeDomain(response.original, 'original', 'Original Data');
-            plotFFT(response.fft, 'fft', 'FFT Data');
-            plotSpectrogram(response.wavelet, 'wavelet', 'Wavelet Data');
-            plotConstellation(response.constellation, 'constellation', 'Constellation Data');
-            document.querySelector('.plot-grid').classList.remove('hidden');
+            console.log('Monitoring process initiated successfully');
+            fetch_data();
         },
         error: function (error) {
             console.log('Error:', error);
         }
     });
 }
+document.addEventListener('DOMContentLoaded', (event) => {
+    var button = document.querySelector('.button-fancy');
+
+    button.addEventListener('click', function () {
+        this.classList.add('active');
+    });
+});
+
+var socket = io();
+
+
+socket.on('new_signal', function (data) {
+    plotIQTimeDomain(data.original, 'original', 'Original Data');
+    plotFFT(data.fft, 'fft', 'FFT Data');
+    plotSpectrogram(data.wavelet, 'wavelet', 'Wavelet Data');
+    plotConstellation(data.constellation, 'constellation', 'Constellation Data');
+    document.querySelector('.plot-grid').classList.remove('hidden');
+    document.querySelector('.button-fancy').classList.remove('active');
+    document.querySelector('h3.model-prediction').textContent = 'Model prediction of modulation: ' + data.prediction;
+    document.querySelector('h3.true-label').textContent = 'Setted True Label of modulation: Empty';
+});
+
 function plotConstellation(data, divId, title) {
     var I = data.map(function (value) { return value[0]; });
     var Q = data.map(function (value) { return value[1]; });
