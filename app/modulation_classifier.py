@@ -138,7 +138,7 @@ class modulation_classifier(gr.top_block, Qt.QWidget):
         self.blocks_throttle2_0_0 = blocks.throttle( gr.sizeof_gr_complex*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_gr_complex*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_stream_mux_0 = blocks.stream_mux(gr.sizeof_gr_complex*1, (1, 1))
-        self.blocks_selector_0 = blocks.selector(gr.sizeof_gr_complex*1,0,0)
+        self.blocks_selector_0 = blocks.selector(gr.sizeof_gr_complex*1,7,0)
         self.blocks_selector_0.set_enabled(True)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
         self.blocks_head_0_3_1 = blocks.head(gr.sizeof_gr_complex*1, 1024000)

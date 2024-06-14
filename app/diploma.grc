@@ -353,7 +353,7 @@ blocks:
     alias: ''
     comment: ''
     enabled: 'True'
-    input_index: '0'
+    input_index: '7'
     maxoutbuf: '0'
     minoutbuf: '0'
     num_inputs: '8'

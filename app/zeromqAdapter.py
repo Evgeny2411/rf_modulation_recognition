@@ -16,21 +16,24 @@ class ZmqAdapter:
     def run(self):
         while self.running:
             signal = self.socket.recv()
+            print('Recieving signal')
             signal_array = self.convert_signal(signal)
-            self.send_signal(signal_array)
+            self.send_signal(signal_array[:1024])
             self.running = False
 
     def convert_signal(self, signal):
         signal_array = np.frombuffer(signal, dtype=np.complex64)
         real_part = signal_array.real
         imag_part = signal_array.imag
-        signal_array_split = np.stack((real_part, imag_part), axis=-1)        
+        signal_array_split = np.stack((real_part, imag_part), axis=-1)
         return signal_array_split
 
     def send_signal(self, signal_array):
         headers = {"Content-Type": "application/json"}
         data = signal_array.tolist()
-        response = requests.post(self.endpoint_address + '/recieve_signal', json=data, headers=headers)
+        response = requests.post(
+            self.endpoint_address + "/receive_signal", json=data, headers=headers
+        )
         if response.status_code == 200:
             print("Signal sent successfully!")
         else:
